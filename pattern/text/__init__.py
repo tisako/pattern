@@ -606,7 +606,7 @@ def _read(path, encoding="utf-8", comment=";;;"):
             if not line or (comment and line.startswith(comment)):
                 continue
             yield line
-    raise StopIteration
+    return
 
 
 class Lexicon(lazydict):
@@ -622,7 +622,8 @@ class Lexicon(lazydict):
 
     def load(self):
         # Arnold NNP x
-        dict.update(self, (x.split(" ")[:2] for x in _read(self._path) if len(x.split(" ")) > 1))
+        split_ = (x.split(" ")[:2] for x in _read(self._path) if len(x.split(" ")) > 1)
+        dict.update(self, split_)
 
 #--- FREQUENCY -------------------------------------------------------------------------------------
 
